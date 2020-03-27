@@ -25,12 +25,12 @@ apply plugin: 'com.android.library'
 import org.apache.tools.ant.taskdefs.condition.Os
 
 android {
-	compileSdkVersion versionCompiler
-	buildToolsVersion versionBuildTool
+	compileSdkVersion 28
+	buildToolsVersion '28.0.1'
 
 	compileOptions {
-		sourceCompatibility javaSourceCompatibility
-		targetCompatibility javaTargetCompatibility
+		sourceCompatibility JavaVersion.VERSION_1_6
+		targetCompatibility JavaVersion.VERSION_1_6
 	}
 
     defaultConfig {
@@ -49,6 +49,9 @@ android {
 			jniLibs.srcDir 'src/main/libs'
 			jni.srcDirs = []
 		}
+	}
+	lintOptions {
+		abortOnError false
 	}
 }
 
@@ -84,9 +87,9 @@ task ndkClean(type: Exec, description: 'clean JNI libraries') {
 clean.dependsOn 'ndkClean'
 
 dependencies {
-    compile fileTree(dir: new File(buildDir, 'libs'), include: '*.jar')
-	compile "com.android.support:support-annotations:${supportLibVersion}"
-	compile("com.serenegiant:common:${commonLibVersion}") {
-		exclude module: 'support-v4'
-	}
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    //compile 'com.android.support:support-v4:28.0.0-alpha3'
+    compile("com.serenegiant:common:${commonLibVersion}") {
+        exclude module: 'support-v4'
+    }
 }
